@@ -1,9 +1,10 @@
 import { LogOutIcon, SearchIcon, SettingsIcon, SunIcon } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
-import { userInterface } from "../../types/user";
+import { userInterface } from "../../../types/user";
 import ProfileModal from "./Modal";
 import Image from "next/image";
+import { signOut } from "next-auth/react";
 
 const NavbarDesktop: React.FC<userInterface> = ({ user }) => {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -12,10 +13,17 @@ const NavbarDesktop: React.FC<userInterface> = ({ user }) => {
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
-  console.log(user);
-
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
+    if (isDarkMode) {
+      localStorage.setItem("dark", "true");
+    } else {
+      localStorage.setItem("dark", "false");
+    }
+  };
+
+  const handleLogout = async () => {
+    await signOut();
   };
 
   return (
@@ -64,13 +72,21 @@ const NavbarDesktop: React.FC<userInterface> = ({ user }) => {
         </button>
 
         {user ? (
-          <button
-            onClick={toggleModal}
-            className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-md"
-          >
-            <span>Welcome Back</span>
-            <span className="ml-2 font-bold">Othinus</span>
-          </button>
+          <div>
+            <button
+              onClick={toggleModal}
+              className="text-gray-400 hover:text-white"
+              title="Profile"
+            >
+              <Image
+                width={40}
+                height={40}
+                src={user.profilePicture}
+                alt="Profile"
+                className="w-8 h-8 rounded-full"
+              />
+            </button>
+          </div>
         ) : (
           <button className="text-gray-400 hover:text-white" title="Login">
             Login
@@ -80,8 +96,8 @@ const NavbarDesktop: React.FC<userInterface> = ({ user }) => {
           <div className="absolute top-14 right-5 overflow-hidden mt-2 w-80 bg-white shadow-lg rounded-lg p-4 text-gray-800 z-50">
             <div className="flex items-center space-x-3 mb-4">
               <Image
-              width={180}
-              height={180}
+                width={180}
+                height={180}
                 src={user.profilePicture}
                 alt="Profile"
                 className="w-12 h-12 rounded-full"
@@ -100,7 +116,10 @@ const NavbarDesktop: React.FC<userInterface> = ({ user }) => {
                 <SettingsIcon className="w-5 h-5 mr-2" />
                 Manage account
               </button>
-              <button className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100">
+              <button
+                onClick={handleLogout}
+                className="flex items-center w-full px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
                 <LogOutIcon className="w-5 h-5 mr-2" />
                 Sign out
               </button>

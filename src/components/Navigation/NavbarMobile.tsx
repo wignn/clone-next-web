@@ -1,7 +1,7 @@
 import { SearchIcon, SunIcon, MenuIcon, XIcon } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
-import { userInterface } from "../../types/user";
+import { userInterface } from "../../../types/user";
 
 const NavbarMobile: React.FC<userInterface> = ({ user }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

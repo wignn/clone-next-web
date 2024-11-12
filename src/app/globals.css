@@ -11,3 +11,8 @@ body {
     --radius: 0.5rem;
   }
 }
+
+
+.login-dark {
+  background-color: black;
+}

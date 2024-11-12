@@ -2,7 +2,7 @@
 import React from "react";
 import NavbarMobile from "./NavbarMobile";
 import NavbarDesktop from "./NavDesktop";
-import { userInterface } from "../../types/user";
+import { userInterface } from "../../../types/user";
 
 const Navbar:React.FC<userInterface> = ({user}) => {
   return (

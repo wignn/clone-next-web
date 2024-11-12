@@ -28,8 +28,7 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         try {
           const response = await axios.patch(`${API_URL.url}/users`, { username: credentials?.username, password: credentials?.password });
-          const users = response.data;
-          const user = users.data;
+          const user = response.data;
           console.log(user);
 
           if (!user) {
